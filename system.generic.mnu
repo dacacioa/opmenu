@@ -1,0 +1,5 @@
+Generic System Functions
+Reboot 
+	sudo -u root /sbin/reboot
+Stop 
+	sudo -u root /sbin/poweroff 
