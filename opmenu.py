@@ -3,8 +3,20 @@
 # Author: David Acacio
 # Email: dacacioa@gmail.com
 
+#Bloque de login
+
+import logging
+	
+logger = logging.getLogger('opmenu')
+hdlr = logging.FileHandler('/logs/system/gomenu/opmenu.log')
+formatter = logging.Formatter('%(asctime)s %(levelname)s %(message)s')
+hdlr.setFormatter(formatter)
+logger.addHandler(hdlr) 
+logger.setLevel(logging.INFO)
+
+
 #import propios de python
-import re,sys,os
+import re,sys,os,subprocess,commands
 
 #clases propias
 
@@ -40,28 +52,41 @@ class navegacion:
 			return str(self.menu[len(self.menu)-1])
 		except IndexError:
 			return 1
-
+	def printruta(self):
+		ruta = ""
+		contador = 0
+		for i in self.menu:
+			if (ruta == ""):
+				ruta = str(self.menu[contador])
+			else:
+				ruta = ruta + " -> " + str(self.menu[contador])
+			contador = contador + 1
+		return str(ruta)
+			
 #Bloque de programa
 
 
 def cabecera():
 	server = str(os.popen("hostname").readlines())
 	server = server.replace("['","")
-	server = server.replace("\\n\']","")
+	server = server.replace("\\n']","")
+	mapa = n.printruta()
 	os.system("clear")
-	print "OpMenu"
-	print "ServerName -- > "+bcolors.WARNING + server + bcolors.ENDC
+	print "PyOpeMenu"
+	print "Server --> " +bcolors.WARNING + server + bcolors.ENDC
+	print "Mapa --> " + bcolors.OKGREEN + mapa + bcolors.ENDC
 	print "========================================================================================================================"
 	
 def titulo(texto):
-	print bcolors.OKBLUE + "Menu: " + bcolors.HEADER +  texto + bcolors.ENDC + "\n"
+	print
+	print bcolors.OKBLUE + "Menu: " + bcolors.HEADER +  texto + bcolors.ENDC
+	print
 
 def opcion(numero, texto):
-	print bcolors.FAIL + "\t" +numero + "  "+bcolors.ENDC +  texto 
+	print bcolors.FAIL + "\t" +numero + "\t"+bcolors.ENDC +  texto 
 	
 def executa(opciones):
-	seleccio = raw_input("Choose option -> ")
-	
+	seleccio = raw_input("Si us plau, tria una opció -> ")
 	try:	
 		if (seleccio == "q"):
 			
@@ -78,21 +103,19 @@ def executa(opciones):
 					#raw_input (n.getMenu())
 					#readfile(n.getMenu())
 				else:
-					#print ("Ejecutamos " + opciones[int(seleccio)])
-					#print os.system (opciones[int(seleccio)])
-					os.system (opciones[int(seleccio)])
-					#print os.popen(opciones[int(seleccio)]).readlines()
-					#raw_input ("Presioni INTRO per continuar")
+					comando = str((opciones[int(seleccio)])) 
+					#print comando
+					os.system (comando)
 				readfile(n.getMenu())
 
 	except ValueError:
 
-		raw_input("Opci� no v�lida. Pulsi Intrada per continuar... ")
+		raw_input("Opció no vàlida. Pulsi Intrada per continuar... ")
 		readfile(n.getMenu())
 
 	except IndexError:
 
-		raw_input("Opci� no v�lida. Pulsi Intrada per continuar... ")
+		raw_input("Opció no vàlida. Pulsi Intrada per continuar... ")
                 readfile(n.getMenu())
 
 def readfile(fichero):
@@ -103,7 +126,12 @@ def readfile(fichero):
 		printmenu(menufile)
 
 	except IOError:
-		exit
+		#raw_input (str(fichero))
+		if (str(fichero) == "1"):
+			os.system("clear")
+			exit
+		else:
+			readfile(n.getMenuAnt())	
 
 def printmenu(menu):
 #printa menu
@@ -111,7 +139,10 @@ def printmenu(menu):
 	opciones =[]
 	cabecera()
 	for line in menu:
-		linea = line.replace("\n","")
+		linea = str(line)
+		linea = linea.replace("Premi q per Sortir\n","")
+		linea = linea.replace(":", "")
+		linea = linea.replace("\n","")
 		if linea.find("MENU ") != -1:
 			#print ("Opcion de menu" + line)			
 			palabras = linea.split(" ")
@@ -124,17 +155,22 @@ def printmenu(menu):
 				titulo (linea)
 				orden = orden + 1
 			else:
-				if linea.find("q per ") == -1:
-					#print ("Opcion " + str(orden) + " " + linea)
-					#if linea.find(":") == -1:
+				#print ("Opcion " + str(orden) + " " + linea)
+				if len(linea) > 0:
 					opcion (str(orden),linea)
 					orden = orden + 1
-	print ("\nPremi q per Sortir")
+	print
+	print ("Premi q per Sortir")
 	print "========================================================================================================================"
+	print
 	
 	executa(opciones)
 
-n = navegacion()
-n.addMenu('main.mnu')
-readfile(n.getMenu())
+try:
+	n = navegacion()
+	n.addMenu('main.mnu')
+	readfile(n.getMenu())
 
+except KeyboardInterrupt:
+
+	print "Bye"
