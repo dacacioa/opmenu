@@ -140,18 +140,18 @@ def executa(opciones):
 						runcomand = True
 				
 					if ( runcomand ):
-						logger.info (os.environ['SSH_CLIENT'] + ' ' + comando)
+						logger.info (os.getenv('SSH_CLIENT','') + ' ' + os.getenv('USER','') + ' ' + comando)
 						os.system (comando)
 
 				readfile(n.getMenu())
 
 	except ValueError:
-		logger.warning (os.environ['SSH_CLIENT'] + " Invalid value option. Enter to continue... ")
+		logger.warning (os.getenv('SSH_CLIENT','') + ' ' + os.getenv('USER','') + ' ' + "Invalid value option. Enter to continue... ")
 		raw_input("Invalid value option. Enter to continue... ")
 		readfile(n.getMenu())
 
 	except IndexError:
-		logger.warning (os.environ['SSH_CLIENT'] + " Invalid index option. Enter to continue... ")
+		logger.warning (os.getenv('SSH_CLIENT','') + ' ' + os.getenv('USER','') + ' ' + " Invalid index option. Enter to continue... ")
 		raw_input("Invalid index option. Enter to continue... ")
                 readfile(n.getMenu())
 
@@ -236,12 +236,12 @@ def query_yes_no(question, default="yes"):
                              "(or 'y' or 'n').\n")
 
 try:
-        logger.info(os.environ['SSH_CLIENT'] + " Entering the opmenu")
+        logger.info(os.getenv('SSH_CLIENT','') + ' ' + os.getenv('USER','') + ' ' + "Entering the opmenu")
 	n = navegacion()
 	n.addMenu('main.mnu')
 	readfile(n.getMenu())
-	logger.info(os.environ['SSH_CLIENT'] + " Leaving the opmenu")
+	logger.info(os.getenv('SSH_CLIENT','') + ' ' + os.getenv('USER','') + ' ' + "Leaving the opmenu")
 
 except KeyboardInterrupt:
-        logger.info(os.environ['SSH_CLIENT'] + " Leaving the opmenu (Interrupt)")
+        logger.info(os.getenv('SSH_CLIENT','') + ' ' + os.getenv('USER','') + ' ' + "Leaving the opmenu (Interrupt)")
 	print "Bye"
