@@ -3,22 +3,48 @@
 # Author: David Acacio
 # Email: dacacioa@gmail.com
 
+## Contributions:
+# Author: José Luis Bermúdez
+# Email: jl.bermudez@gmail.com
+# 
+# * Check logfile exist and create it if not.
+# * Translate all non english literals.
+# * Adding and check actionlog.
+
 #Bloque de login
 
+
 import logging
-	
+import os.path
+
+## Check logfile, if don´t exist create it.
+
+#LOGDIR='/logs/system/gomenu'	## not standard path.
+LOGDIR='/var/log'    ## dir location compatible all linux distributions.
+LOGFILE=LOGDIR + '/opmenu.log'
+
+if not os.path.exists(LOGDIR):
+    os.makedirs(LOGDIR)
+
+if os.path.isfile(LOGFILE): 
+    print "File exists"
+else:
+    with open(LOGFILE,'a') as filelog:
+    	filelog.close();
+## End check logfile.
+
 logger = logging.getLogger('opmenu')
-hdlr = logging.FileHandler('/logs/system/gomenu/opmenu.log')
+hdlr = logging.FileHandler(LOGFILE)
 formatter = logging.Formatter('%(asctime)s %(levelname)s %(message)s')
 hdlr.setFormatter(formatter)
 logger.addHandler(hdlr) 
 logger.setLevel(logging.INFO)
 
 
-#import propios de python
+#import python class library
 import re,sys,os,subprocess,commands
 
-#clases propias
+#own classes
 
 class bcolors:
     HEADER = '\033[95m'
@@ -74,7 +100,7 @@ def cabecera():
 	os.system("clear")
 	print "PyOpeMenu"
 	print "Server --> " +bcolors.WARNING + server + bcolors.ENDC
-	print "Mapa --> " + bcolors.OKGREEN + mapa + bcolors.ENDC
+	print "Map --> " + bcolors.OKGREEN + mapa + bcolors.ENDC
 	print "========================================================================================================================"
 	
 def titulo(texto):
@@ -86,7 +112,8 @@ def opcion(numero, texto):
 	print bcolors.FAIL + "\t" +numero + "\t"+bcolors.ENDC +  texto 
 	
 def executa(opciones):
-	seleccio = raw_input("Si us plau, tria una opció -> ")
+	seleccio = raw_input("Please select an option. -> ")
+        runcomand = False
 	try:	
 		if (seleccio == "q"):
 			
@@ -103,19 +130,29 @@ def executa(opciones):
 					#raw_input (n.getMenu())
 					#readfile(n.getMenu())
 				else:
-					comando = str((opciones[int(seleccio)])) 
-					#print comando
-					os.system (comando)
+					runcommand = False
+					comando = str((opciones[int(seleccio)]))
+					if ( comando.find("requestconfirm") != -1 ):
+						comando = comando.replace('requestconfirm','')
+						if ( query_yes_no("Are you sure (y/n)", "no") ):
+							runcomand = True
+					else:
+						runcomand = True
+				
+					if ( runcomand ):
+						logger.info (os.environ['SSH_CLIENT'] + ' ' + comando)
+						os.system (comando)
+
 				readfile(n.getMenu())
 
 	except ValueError:
-
-		raw_input("Opció no vàlida. Pulsi Intrada per continuar... ")
+		logger.warning (os.environ['SSH_CLIENT'] + " Invalid value option. Enter to continue... ")
+		raw_input("Invalid value option. Enter to continue... ")
 		readfile(n.getMenu())
 
 	except IndexError:
-
-		raw_input("Opció no vàlida. Pulsi Intrada per continuar... ")
+		logger.warning (os.environ['SSH_CLIENT'] + " Invalid index option. Enter to continue... ")
+		raw_input("Invalid index option. Enter to continue... ")
                 readfile(n.getMenu())
 
 def readfile(fichero):
@@ -140,7 +177,7 @@ def printmenu(menu):
 	cabecera()
 	for line in menu:
 		linea = str(line)
-		linea = linea.replace("Premi q per Sortir\n","")
+		linea = linea.replace("Press \"q\" to exit.\n","")
 		linea = linea.replace(":", "")
 		linea = linea.replace("\n","")
 		if linea.find("MENU ") != -1:
@@ -160,17 +197,51 @@ def printmenu(menu):
 					opcion (str(orden),linea)
 					orden = orden + 1
 	print
-	print ("Premi q per Sortir")
+	print ("Press \"q\" to exit.\n")
 	print "========================================================================================================================"
 	print
 	
 	executa(opciones)
 
+def query_yes_no(question, default="yes"):
+    """Ask a yes/no question via raw_input() and return their answer.
+
+    "question" is a string that is presented to the user.
+    "default" is the presumed answer if the user just hits <Enter>.
+        It must be "yes" (the default), "no" or None (meaning
+        an answer is required of the user).
+
+    The "answer" return value is one of "yes" or "no".
+    """
+    valid = {"yes":True,   "y":True,  "ye":True,
+             "no":False,     "n":False}
+    if default == None:
+        prompt = " [y/n] "
+    elif default == "yes":
+        prompt = " [Y/n] "
+    elif default == "no":
+        prompt = " [y/N] "
+    else:
+        raise ValueError("invalid default answer: '%s'" % default)
+
+    while True:
+        sys.stdout.write(question + prompt)
+        choice = raw_input().lower()
+        if default is not None and choice == '':
+            return valid[default]
+        elif choice in valid:
+            return valid[choice]
+        else:
+            sys.stdout.write("Please respond with 'yes' or 'no' "\
+                             "(or 'y' or 'n').\n")
+
 try:
+        logger.info(os.environ['SSH_CLIENT'] + " Entering the opmenu")
 	n = navegacion()
 	n.addMenu('main.mnu')
 	readfile(n.getMenu())
+	logger.info(os.environ['SSH_CLIENT'] + " Leaving the opmenu")
 
 except KeyboardInterrupt:
-
+        logger.info(os.environ['SSH_CLIENT'] + " Leaving the opmenu (Interrupt)")
 	print "Bye"
