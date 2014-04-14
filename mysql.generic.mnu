@@ -1,0 +1,7 @@
+Generic Apache Control
+Status
+        sudo -u root /etc/init.d/mysql status;echo "Push Enter to continue";read kk
+Start
+        requestconfirm sudo -u root /etc/init.d/mysql start;echo "Push Enter to continue";read kk
+Stop
+        requestconfirm sudo -u root /etc/init.d/mysql stop;echo "Push Enter to continue";read kk
