@@ -2,6 +2,6 @@ Generic System Functions
 Show who is logged on and what they are doing.
 	sudo -u root w;echo "Push Enter to continue";read kk
 Reboot 
-	sudo -u root /sbin/reboot
+	requestconfirm sudo -u root /sbin/reboot
 Stop 
-	sudo -u root /sbin/poweroff 
+	requestconfirm sudo -u root /sbin/poweroff 
