@@ -49,6 +49,13 @@ Save the generated files to the new language in the "po" directory and run the c
 
 # msgfmt po/ca_ES.po --output-file /usr/share/locale/ca/LC_MESSAGES/opmenu.mo
 
+You can test language seting LANG environment.
+
+Ex.
+
+# export LANG=gl_ES.UTF-8
+
+
 =====================
 
 INSTALL NOTES.
