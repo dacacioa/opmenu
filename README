@@ -55,6 +55,7 @@ Ex.
 
 # export LANG=gl_ES.UTF-8
 
+NOTE: To add new texts that want to translate. Add to script with _ ("sample text") syntax.
 
 =====================
 
