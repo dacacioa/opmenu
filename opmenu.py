@@ -134,7 +134,7 @@ def executa(opciones):
 					comando = str((opciones[int(seleccio)]))
 					if ( comando.find("requestconfirm") != -1 ):
 						comando = comando.replace('requestconfirm','')
-						if ( query_yes_no("Are you sure (y/n)", "no") ):
+						if ( query_yes_no("Are you sure? ", "no") ):
 							runcomand = True
 					else:
 						runcomand = True
