@@ -4,45 +4,66 @@
 # Email: dacacioa@gmail.com
 
 ## Contributions:
-# Author: José Luis Bermúdez
+# Author: Jose Luis Bermudez
 # Email: jl.bermudez@gmail.com
 # 
 # * Check logfile exist and create it if not.
 # * Translate all non english literals.
 # * Adding and check actionlog.
 
+#import python class library
+import re,sys,os,subprocess,commands
+
+# INTERNACIONALIZACIÓN.
+reload(sys)
+sys.setdefaultencoding("utf-8")
+
+import i18n
+_ = i18n.language.ugettext #use ugettext instead of getttext to avoid unicode errors
+
+
 #Bloque de login
 
-
 import logging
-import os.path
+#import os.path
 
 ## Check logfile, if don´t exist create it.
 
 #LOGDIR='/logs/system/gomenu'	## not standard path.
+
 LOGDIR='/var/log'    ## dir location compatible all linux distributions.
 LOGFILE=LOGDIR + '/opmenu.log'
+bLog = True
 
-if not os.path.exists(LOGDIR):
-    os.makedirs(LOGDIR)
+try:
+    if not os.path.exists(LOGDIR):
+        os.makedirs(LOGDIR)
 
-if os.path.isfile(LOGFILE): 
-    print "File exists"
-else:
+    if os.path.isfile(LOGFILE): 
+        print _("File exists")
+    else:
+        with open(LOGFILE,'a') as filelog:
+    	    filelog.close();
+
+except IOError as e:
+    print "I/O error({0}): {1}".format(e.errno, e.strerror)
+    LOGDIR='/tmp'	# Alternative to the log directory, users without permissions can not generate log in /var/log.
+    LOGFILE=LOGDIR + '/opmenu.log'
     with open(LOGFILE,'a') as filelog:
-    	filelog.close();
+        filelog.close();
+except:
+    print _("Unknown error")
+    bLog = False
+
 ## End check logfile.
 
-logger = logging.getLogger('opmenu')
-hdlr = logging.FileHandler(LOGFILE)
-formatter = logging.Formatter('%(asctime)s %(levelname)s %(message)s')
-hdlr.setFormatter(formatter)
-logger.addHandler(hdlr) 
-logger.setLevel(logging.INFO)
-
-
-#import python class library
-import re,sys,os,subprocess,commands
+if bLog:
+    logger = logging.getLogger('opmenu')
+    hdlr = logging.FileHandler(LOGFILE)
+    formatter = logging.Formatter('%(asctime)s %(levelname)s %(message)s')
+    hdlr.setFormatter(formatter)
+    logger.addHandler(hdlr) 
+    logger.setLevel(logging.INFO)
 
 #own classes
 
@@ -99,8 +120,8 @@ def cabecera():
 	mapa = n.printruta()
 	os.system("clear")
 	print "PyOpeMenu"
-	print "Server --> " +bcolors.WARNING + server + bcolors.ENDC
-	print "Map --> " + bcolors.OKGREEN + mapa + bcolors.ENDC
+	print _("Server") + " --> " +bcolors.WARNING + server + bcolors.ENDC
+	print _("Map") + " --> " + bcolors.OKGREEN + mapa + bcolors.ENDC
 	print "========================================================================================================================"
 	
 def titulo(texto):
@@ -112,8 +133,10 @@ def opcion(numero, texto):
 	print bcolors.FAIL + "\t" +numero + "\t"+bcolors.ENDC +  texto 
 	
 def executa(opciones):
-	seleccio = raw_input("Please select an option. -> ")
-        runcomand = False
+	seleccio = raw_input( _("Please select an option.") + " -> ")
+	
+	runcomand = False
+	
 	try:	
 		if (seleccio == "q"):
 			
@@ -134,25 +157,28 @@ def executa(opciones):
 					comando = str((opciones[int(seleccio)]))
 					if ( comando.find("requestconfirm") != -1 ):
 						comando = comando.replace('requestconfirm','')
-						if ( query_yes_no("Are you sure? ", "no") ):
+						if ( query_yes_no( _("Are you sure?") , "no") ):
 							runcomand = True
 					else:
 						runcomand = True
 				
 					if ( runcomand ):
-						logger.info (os.getenv('SSH_CLIENT','') + ' ' + os.getenv('USER','') + ' ' + comando)
+						if bLog:
+							logger.info (os.getenv('SSH_CLIENT','') + ' ' + os.getenv('USER','') + ' ' + comando)
 						os.system (comando)
 
 				readfile(n.getMenu())
 
 	except ValueError:
-		logger.warning (os.getenv('SSH_CLIENT','') + ' ' + os.getenv('USER','') + ' ' + "Invalid value option. Enter to continue... ")
-		raw_input("Invalid value option. Enter to continue... ")
+		if bLog:
+		    logger.warning (os.getenv('SSH_CLIENT','') + ' ' + os.getenv('USER','') + ' ' + _("Invalid value option. Enter to continue...") )
+		raw_input( _("Invalid value option. Enter to continue... ") )
 		readfile(n.getMenu())
 
 	except IndexError:
-		logger.warning (os.getenv('SSH_CLIENT','') + ' ' + os.getenv('USER','') + ' ' + " Invalid index option. Enter to continue... ")
-		raw_input("Invalid index option. Enter to continue... ")
+		if bLog:
+		    logger.warning (os.getenv('SSH_CLIENT','') + ' ' + os.getenv('USER','') + ' ' + _("Invalid index option. Enter to continue... ") )
+		raw_input( _("Invalid index option. Enter to continue... ") )
                 readfile(n.getMenu())
 
 def readfile(fichero):
@@ -177,7 +203,7 @@ def printmenu(menu):
 	cabecera()
 	for line in menu:
 		linea = str(line)
-		linea = linea.replace("Press \"q\" to exit.\n","")
+		linea = linea.replace( _("Press \"q\" to exit.\n") ,"")
 		linea = linea.replace(":", "")
 		linea = linea.replace("\n","")
 		if linea.find("MENU ") != -1:
@@ -197,7 +223,7 @@ def printmenu(menu):
 					opcion (str(orden),linea)
 					orden = orden + 1
 	print
-	print ("Press \"q\" to exit.\n")
+	print ( _("Press \"q\" to exit.\n") )
 	print "========================================================================================================================"
 	print
 	
@@ -222,7 +248,7 @@ def query_yes_no(question, default="yes"):
     elif default == "no":
         prompt = " [y/N] "
     else:
-        raise ValueError("invalid default answer: '%s'" % default)
+        raise ValueError( _("invalid default answer:") + " '%s'" % default)
 
     while True:
         sys.stdout.write(question + prompt)
@@ -232,16 +258,18 @@ def query_yes_no(question, default="yes"):
         elif choice in valid:
             return valid[choice]
         else:
-            sys.stdout.write("Please respond with 'yes' or 'no' "\
-                             "(or 'y' or 'n').\n")
+            sys.stdout.write( _("Please respond with 'yes' or 'no' ") + "(or 'y' or 'n').\n")
 
 try:
-        logger.info(os.getenv('SSH_CLIENT','') + ' ' + os.getenv('USER','') + ' ' + "Entering the opmenu")
+	if bLog:
+        	logger.info(os.getenv('SSH_CLIENT','') + ' ' + os.getenv('USER','') + ' ' + _("Entering the opmenu") )
 	n = navegacion()
 	n.addMenu('main.mnu')
 	readfile(n.getMenu())
-	logger.info(os.getenv('SSH_CLIENT','') + ' ' + os.getenv('USER','') + ' ' + "Leaving the opmenu")
+	if bLog:
+		logger.info(os.getenv('SSH_CLIENT','') + ' ' + os.getenv('USER','') + ' ' + _("Leaving the opmenu") )
 
 except KeyboardInterrupt:
-        logger.info(os.getenv('SSH_CLIENT','') + ' ' + os.getenv('USER','') + ' ' + "Leaving the opmenu (Interrupt)")
-	print "Bye"
+	if bLog:
+        	logger.info(os.getenv('SSH_CLIENT','') + ' ' + os.getenv('USER','') + ' ' + _("Leaving the opmenu (Interrupt)") )
+	print _("Bye")
