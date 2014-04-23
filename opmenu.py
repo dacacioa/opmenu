@@ -12,20 +12,14 @@
 # * Adding and check actionlog.
 
 #import python class library
-import re,sys,os,subprocess,commands
+import re,sys,os,subprocess,commands,logging,i18n
 
 # INTERNACIONALIZACIÓN.
 reload(sys)
 sys.setdefaultencoding("utf-8")
 
-import i18n
 _ = i18n.language.ugettext #use ugettext instead of getttext to avoid unicode errors
 
-
-#Bloque de login
-
-import logging
-#import os.path
 
 ## Check logfile, if don´t exist create it.
 
