@@ -1,0 +1,83 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2014-04-15 09:44+0200\n"
+"PO-Revision-Date: 2014-04-15 13:21+0100\n"
+"Last-Translator: \n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.6.4\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Language: gl_ES\n"
+
+#: opmenu.py:37
+msgid "File exists"
+msgstr "Ficheiro existe"
+
+#: opmenu.py:49
+msgid "Unknown error"
+msgstr "Erro descoñecido"
+
+#: opmenu.py:121
+msgid "Server"
+msgstr "Servidor"
+
+#: opmenu.py:122
+msgid "Map"
+msgstr "Mapa"
+
+#: opmenu.py:134
+msgid "Please select an option."
+msgstr "Por favor, seleccione unha opción."
+
+#: opmenu.py:156
+msgid "Are you sure?"
+msgstr "Está seguro?"
+
+#: opmenu.py:170
+msgid "Invalid value option. Enter to continue..."
+msgstr "Opción de valor non válido. Intro para continuar ..."
+
+#: opmenu.py:171
+msgid "Invalid value option. Enter to continue... "
+msgstr "Opción de valor non válido. Intro para continuar ..."
+
+#: opmenu.py:176 opmenu.py:177
+msgid "Invalid index option. Enter to continue... "
+msgstr "Opción de índice incorrecto. Intro para continuar ..."
+
+#: opmenu.py:202 opmenu.py:222
+msgid "Press \"q\" to exit.\n"
+msgstr "Prema \"q\" para saír.\n"
+
+#: opmenu.py:247
+msgid "invalid default answer:"
+msgstr "Resposta por defecto non válida:"
+
+#: opmenu.py:257
+msgid "Please respond with 'yes' or 'no' "
+msgstr "Por favor, responda con 'yes' o 'no'"
+
+#: opmenu.py:262
+msgid "Entering the opmenu"
+msgstr "Entrando no opmenu"
+
+#: opmenu.py:267
+msgid "Leaving the opmenu"
+msgstr "Deixando o opmenu"
+
+#: opmenu.py:271
+msgid "Leaving the opmenu (Interrupt)"
+msgstr "Deixando o opmenu (interrupción)"
+
+#: opmenu.py:272
+msgid "Bye"
+msgstr "Adeus"

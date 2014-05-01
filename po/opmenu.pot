@@ -1,0 +1,82 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2014-04-15 09:44+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: opmenu.py:37
+msgid "File exists"
+msgstr ""
+
+#: opmenu.py:49
+msgid "Unknown error"
+msgstr ""
+
+#: opmenu.py:121
+msgid "Server"
+msgstr ""
+
+#: opmenu.py:122
+msgid "Map"
+msgstr ""
+
+#: opmenu.py:134
+msgid "Please select an option."
+msgstr ""
+
+#: opmenu.py:156
+msgid "Are you sure?"
+msgstr ""
+
+#: opmenu.py:170
+msgid "Invalid value option. Enter to continue..."
+msgstr ""
+
+#: opmenu.py:171
+msgid "Invalid value option. Enter to continue... "
+msgstr ""
+
+#: opmenu.py:176 opmenu.py:177
+msgid "Invalid index option. Enter to continue... "
+msgstr ""
+
+#: opmenu.py:202 opmenu.py:222
+msgid "Press \"q\" to exit.\n"
+msgstr ""
+
+#: opmenu.py:247
+msgid "invalid default answer:"
+msgstr ""
+
+#: opmenu.py:257
+msgid "Please respond with 'yes' or 'no' "
+msgstr ""
+
+#: opmenu.py:262
+msgid "Entering the opmenu"
+msgstr ""
+
+#: opmenu.py:267
+msgid "Leaving the opmenu"
+msgstr ""
+
+#: opmenu.py:271
+msgid "Leaving the opmenu (Interrupt)"
+msgstr ""
+
+#: opmenu.py:272
+msgid "Bye"
+msgstr ""

@@ -1,0 +1,11 @@
+Generic Apache Control
+Status
+        sudo -u root service apache2 status;echo "Push Enter to continue";read kk
+Start
+        requestconfirm sudo -u root service apache2 start;echo "Push Enter to continue";read kk
+Stop
+        requestconfirm sudo -u root service apache2 stop;echo "Push Enter to continue";read kk
+Reload
+        requestconfirm sudo -u root service apache2 reload;echo "Push Enter to continue";read kk
+Restart
+        requestconfirm sudo -u root service apache2 restart;echo "Push Enter to continue";read kk
