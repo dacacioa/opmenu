@@ -32,19 +32,19 @@ Execute script setup_lang.sh to compile languages in your system.
 ------------------------------
 #!/bin/bash
 
-msgfmt po/es_ES.po --output-file /usr/share/locale/es/LC_MESSAGES/opmenu.mo
-msgfmt po/gl_ES.po --output-file /usr/share/locale/gl/LC_MESSAGES/opmenu.mo
-msgfmt po/ca_ES.po --output-file /usr/share/locale/ca/LC_MESSAGES/opmenu.mo
+msgfmt po/es_ES.po --output-file /usr/share/locale/es/LC_MESSAGES/opmenu.mo # spanish translation
+msgfmt po/gl_ES.po --output-file /usr/share/locale/gl/LC_MESSAGES/opmenu.mo # galician translation
+msgfmt po/ca_ES.po --output-file /usr/share/locale/ca/LC_MESSAGES/opmenu.mo # catalan translation
 
 exit
 ------------------------------
 
-If you want to add a new translation in the "po" directory exists opmenu.pot file, 
-this file can be generated again if new texts are added or changed in the scrypt with the command:
+If you want to add a new translation or add/modify texts,  you will have to regenerate the opmenu.pot with the command:
 
 # xgettext --language=Python --keyword=_ --output=po/opmenu.pot --from-code=UTF-8 `find . -name "*.py"`
 
-Once the new file generated can easily add languages ​​with Poedit utility. (http://www.poedit.net/)
+(Also you can easily add languages ​​with Poedit utility: http://www.poedit.net/)
+
 Save the generated files to the new language in the "po" directory and run the command as shown changing necessary for the new language.
 
 # msgfmt po/ca_ES.po --output-file /usr/share/locale/ca/LC_MESSAGES/opmenu.mo
@@ -55,7 +55,7 @@ Ex.
 
 # export LANG=gl_ES.UTF-8
 
-NOTE: To add new texts that want to translate. Add to script with _ ("sample text") syntax.
+??NOTE: To add new texts that want to translate. Add to script with _ ("sample text") syntax.??
 
 =====================
 
@@ -87,4 +87,3 @@ Comments and request are welcome.
 Regards!
 
 D. Acacio
-29-09-13
