@@ -71,17 +71,6 @@ exec  ./opmenu.py
 
 =====================
 
-Known issues.
-
-Log file in /var/log with unprivileged user can not be created ([Errno 13] Permission denied). Create it as root and change owner.
-
-Ex.
-touch /var/log/opmenu.log
-chown oper:oper /var/log/opmenu.log
-
-
-=====================
-
 Comments and request are welcome.
 
 Regards!
