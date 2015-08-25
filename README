@@ -1,11 +1,11 @@
-OpMenu is a python based script for basic system administration.
+OpMenu is a python based script for basic Linux system administration.
 
 It follows the Gomenu script guidelines (http://fossies.org/unix/privat/old/gomenu-0.8.1.tar.gz/index_af.html). 
 OpMenu uses .mnu files to build a screen menu that allow to low levels sysadmins and system operators do basic 
 and preconfigured actions (f.e. restart a webserver, check the status of a daemon, etc...)
 
 You can find some basic .mnu examples files in the repository. 
-All menu options have to begin with $MENU key and all the actions have to contain .sh or sudo string. 
+All menu options have to begin with $MENU key and all the actions have to contain .sh or sudo command. 
 A lot of Gomenu .mnu must be compatibles.
 
 =====================
@@ -43,9 +43,9 @@ If you want to add a new translation or add/modify texts,  you will have to rege
 
 # xgettext --language=Python --keyword=_ --output=po/opmenu.pot --from-code=UTF-8 `find . -name "*.py"`
 
-(Also you can easily add languages ​​with Poedit utility: http://www.poedit.net/)
+(Also you can easily add languages with Poedit utility: http://www.poedit.net/)
 
-Save the generated files to the new language in the "po" directory and run the command as shown changing necessary for the new language.
+Save the generated files in the "po" directory and run the following command for the new language.
 
 # msgfmt po/ca_ES.po --output-file /usr/share/locale/ca/LC_MESSAGES/opmenu.mo
 
@@ -55,7 +55,7 @@ Ex.
 
 # export LANG=gl_ES.UTF-8
 
-??NOTE: To add new texts that want to translate. Add to script with _ ("sample text") syntax.??
+??NOTE: To add new texts that you want translate, add it to script with _ ("sample text") syntax.??
 
 =====================
 
@@ -65,7 +65,7 @@ Add oper group to sudoers for nonpassword required if user operator is not root.
 
 %oper ALL=(ALL:ALL) NOPASSWD:ALL
 
-For automatic start of the program you must add the next lines in the .bash_profile of the user:
+For automatic start of the program you have to add the next lines in the .bash_profile of the user:
 
 exec  ./opmenu.py
 
