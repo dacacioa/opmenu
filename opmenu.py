@@ -12,7 +12,7 @@
 # * Adding and check actionlog.
 
 #import python class library
-import re,sys,os,subprocess,commands,logging,i18n
+import re,sys,os,subprocess,commands,logging,i18n,getpass
 
 # INTERNACIONALIZACIÓN.
 reload(sys)
@@ -20,13 +20,15 @@ sys.setdefaultencoding("utf-8")
 
 _ = i18n.language.ugettext #use ugettext instead of getttext to avoid unicode errors
 
+INSTALL_PATH='/opt/opmenu-master/'
+USER = getpass.getuser()
 
 ## Check logfile, if don´t exist create it.
 
 #LOGDIR='/logs/system/gomenu'	## not standard path.
 
 LOGDIR='/var/log'    ## dir location compatible all linux distributions.
-LOGFILE=LOGDIR + '/opmenu.log'
+LOGFILE=LOGDIR + '/opmenu.%s.log' % USER
 bLog = True
 
 try:
@@ -42,7 +44,7 @@ try:
 except IOError as e:
     print "I/O error({0}): {1}".format(e.errno, e.strerror)
     LOGDIR='/tmp'	# Alternative to the log directory, users without permissions can not generate log in /var/log.
-    LOGFILE=LOGDIR + '/opmenu.log'
+    LOGFILE=LOGDIR + '/opmenu.%s.log' % USER
     with open(LOGFILE,'a') as filelog:
         filelog.close();
 except:
@@ -111,7 +113,7 @@ def cabecera():
 	server = str(os.popen("hostname").readlines())
 	server = server.replace("['","")
 	server = server.replace("\\n']","")
-	mapa = n.printruta()
+	mapa = n.printruta().replace(".mnu","")
 	os.system("clear")
 	print "PyOpeMenu"
 	print _("Server") + " --> " +bcolors.WARNING + server + bcolors.ENDC
@@ -179,7 +181,7 @@ def readfile(fichero):
 #lee fichero .mnu 	
 
 	try:
-		menufile = file(str(fichero))
+		menufile = file(INSTALL_PATH + str(fichero))
 		printmenu(menufile)
 
 	except IOError:
@@ -225,10 +227,12 @@ def printmenu(menu):
 
 def query_yes_no(question, default="yes"):
     """Ask a yes/no question via raw_input() and return their answer.
+
     "question" is a string that is presented to the user.
     "default" is the presumed answer if the user just hits <Enter>.
         It must be "yes" (the default), "no" or None (meaning
         an answer is required of the user).
+
     The "answer" return value is one of "yes" or "no".
     """
     valid = {"yes":True,   "y":True,  "ye":True,
