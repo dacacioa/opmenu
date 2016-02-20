@@ -14,13 +14,14 @@
 #import python class library
 import re,sys,os,subprocess,commands,logging,i18n,getpass
 
+
 # INTERNACIONALIZACIÓN.
 reload(sys)
-sys.setdefaultencoding("utf-8")
+#sys.setdefaultencoding("utf-8")
 
 _ = i18n.language.ugettext #use ugettext instead of getttext to avoid unicode errors
 
-INSTALL_PATH='/opt/opmenu-master/'
+INSTALL_PATH = os.getcwd()+'/' #by default the current working directory. Modify string value if you want to change it
 USER = getpass.getuser()
 
 ## Check logfile, if don´t exist create it.
