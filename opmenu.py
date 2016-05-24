@@ -106,7 +106,13 @@ class navegacion:
 				ruta = ruta + " -> " + str(self.menu[contador])
 			contador = contador + 1
 		return str(ruta)
-			
+
+#Print columns 
+
+def generateColumns():
+	rows, columns = os.popen('stty size', 'r').read().split()
+	print "=" * int(columns)
+	
 #Bloque de programa
 
 
@@ -119,7 +125,7 @@ def cabecera():
 	print "PyOpeMenu"
 	print _("Server") + " --> " +bcolors.WARNING + server + bcolors.ENDC
 	print _("Map") + " --> " + bcolors.OKGREEN + mapa + bcolors.ENDC
-	print "========================================================================================================================"
+	generateColumns()	
 	
 def titulo(texto):
 	print
@@ -221,7 +227,7 @@ def printmenu(menu):
 					orden = orden + 1
 	print
 	print ( _("Press \"q\" to exit.\n") )
-	print "========================================================================================================================"
+	generateColumns()
 	print
 	
 	executa(opciones)
