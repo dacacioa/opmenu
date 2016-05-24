@@ -111,7 +111,7 @@ class navegacion:
 
 def generateColumns():
 	rows, columns = os.popen('stty size', 'r').read().split()
-	print "=" * int(columns)
+	print bcolors.FAIL + "=" * int(columns) +  bcolors.ENDC
 	
 #Bloque de programa
 
@@ -125,6 +125,7 @@ def cabecera():
 	print "PyOpeMenu"
 	print _("Server") + " --> " +bcolors.WARNING + server + bcolors.ENDC
 	print _("Map") + " --> " + bcolors.OKGREEN + mapa + bcolors.ENDC
+	print ""
 	generateColumns()	
 	
 def titulo(texto):
