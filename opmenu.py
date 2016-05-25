@@ -157,7 +157,6 @@ def executa(opciones):
 					#raw_input (n.getMenu())
 					#readfile(n.getMenu())
 				else:
-					runcommand = False
 					comando = str((opciones[int(seleccio)]))
 					if ( comando.find("requestconfirm") != -1 ):
 						comando = comando.replace('requestconfirm','')
