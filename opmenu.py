@@ -35,7 +35,6 @@ bLog = True
 try:
     if not os.path.exists(LOGDIR):
         os.makedirs(LOGDIR)
-
     if os.path.isfile(LOGFILE): 
         print _("File exists")
     else:
