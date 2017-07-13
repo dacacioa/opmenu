@@ -1,6 +1,6 @@
 OpMenu is a python based script for basic Linux system administration.
 
-It follows the Gomenu script guidelines (http://fossies.org/unix/privat/old/gomenu-0.8.1.tar.gz/index_af.html). 
+It follows the Gomenu script guidelines (https://fossies.org/linux/privat/old/OpMenu3.0.tar.gz/index_af.html). 
 OpMenu uses .mnu files to build a screen menu that allow to low levels sysadmins and system operators do basic 
 and preconfigured actions (f.e. restart a webserver, check the status of a daemon, etc...)
 
